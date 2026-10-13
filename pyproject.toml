@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "listings-watch"
+version = "0.1.0"
+description = "Listings from several sites (including JavaScript sites) in one clean database: no duplicates, removed listings flagged, alerts when a scraper breaks, API/CSV/Excel export."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Aleksa Djorovic" }]
+dynamic = ["dependencies"]
+
+[project.scripts]
+listings-watch = "listings_watch.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["listings_watch*"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = [".", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not live'"
+markers = ["live: hits the real demo sites; skipped by default, run with: pytest -m live"]
